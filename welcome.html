@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<style>
+input[type=text], select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  border: 2px solid red;
+  border-radius: 4px;
+}
+
+input[type=submit] {
+  width: 100%;
+  background-color: rgb(201, 62, 62);
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+div {
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+}
+
+</style>
+<body>
+
+<h3>Welcome to the Pig's Game!!</h3>
+
+<div>
+  <form method="POST" action="index.html">
+    <label for="fname">Player 1 Name</label>
+    <input type="text" id="player1name" name="name1" placeholder="Player 1">
+
+    <label for="lname">Player 2 Name</label>
+    <input type="text" id="player2name" name="name2" placeholder="Player 2">
+    <!-- <input type="submit" value="Submit"> -->
+    <button style="background:rgb(0, 140, 255)" onclick="add()" >Submit</button>
+  </form>
+</div>
+
+<div>
+<ul>
+    <h4>Instructions:</h4>
+    <li>The game has 2 players, playing in rounds.</li>
+    <li>In each turn, a player rolls a dice as many times as he whishes. Each result get added to his ROUND score.</li>
+    <li>BUT, if the player rolls a 1, all his ROUND score gets lost. After that, it's the next player's turn.</li>
+    <li>The player can choose to 'Hold', which means that his ROUND score gets added to his GLOBAL score. After that, it's the next player's turn.</li>
+    <li>The first player to reach 100 points on GLOBAL score wins the game.</li>
+</ul>
+
+</div>
+<div>
+    <footer>&copy; Copyright 2020 <br>Created by: Utkarsh Mehta</footer>
+
+</div>
+<script >
+function add() {
+    var a = document.getElementById('player1name').value;
+    var b = document.getElementById('player2name').value;
+    localStorage.setItem('one', a);
+    localStorage.setItem('two', b);
+  }
+</script>
+</body>
+</html>
