@@ -9,7 +9,7 @@ GAME RULES:
 
 */
 
-var scores, roundScore, activePlayer, player1, player2, isGamePlaying;
+var scores, roundScore, activePlayer, player1, player2, isGamePlaying, lastRoll;
 init();
 document.querySelector('.dice').style.display = 'none';
 document.getElementById('score-0').textContent = 0;
@@ -22,7 +22,6 @@ setPlayerName(player1,player2);
 function setPlayerName(player1,player2){
     document.getElementById('name-0').textContent = player1;
     document.getElementById('name-1').textContent = player2;
-    
 }
 
 function init(){
@@ -42,35 +41,38 @@ function init(){
     document.querySelector('.btn-roll').addEventListener('click',function(){
         if(isGamePlaying){
         var dice  = Math.floor(Math.random()*6) + 1;
-        //document.querySelector('#current-0').textContent = dice;
-        var diceDom = document.querySelector('.dice');
-        diceDom.style.display = 'block';
-        diceDom.src = 'dice-' + dice +'.png';
-        if (dice !== 1){
-            //Add score to round/global score
-            roundScore += dice;
-            document.querySelector('#current-'+ activePlayer).textContent = roundScore;
+        lastRoll = dice;
+        if(lastRoll !== 6){
+            var diceDom = document.querySelector('.dice');
+            diceDom.style.display = 'block';
+            diceDom.src = 'dice-' + dice +'.png';
+            if (dice !== 1){
+                //Add score to round/global score
+                roundScore += dice;
+                document.querySelector('#current-'+ activePlayer).textContent = roundScore;
+            }
+            else {
+                //Next player's turn
+                document.getElementById('current-' + activePlayer).textContent = '0';
+                activePlayer === 0 ? activePlayer = 1 : activePlayer = 0;
+                roundScore = 0;
+                document.querySelector('.dice').style.display = 'none';
+                document.querySelector('.player-0-panel').classList.toggle('active');
+                document.querySelector('.player-1-panel').classList.toggle('active');
+            }
         }
-        else {
-            //Next player's turn
-            document.getElementById('current-' + activePlayer).textContent = '0';
-            activePlayer === 0 ? activePlayer = 1 : activePlayer = 0;
-            roundScore = 0;
-            document.querySelector('.dice').style.display = 'none';
-            document.querySelector('.player-0-panel').classList.toggle('active');
-            document.querySelector('.player-1-panel').classList.toggle('active');
+        else{
+            console.log('Loses!')
         }
-    }
+    } 
 });
 
 //New Game
-document.querySelector('.btn-new').addEventListener('click',function(){   
+    document.querySelector('.btn-new').addEventListener('click',function(){   
     init();
-
-   document.querySelector('.player-0-panel').classList.toggle('active');
+    document.querySelector('.player-0-panel').classList.toggle('active');
     document.querySelector('.player-1-panel').classList.toggle('active')
     setPlayerName(player1,player2);
-    //document.querySelector('.player-'+ activePlayer + '-panel').classList.remove("winner");
 });
 
 //Hold
@@ -88,8 +90,7 @@ document.querySelector('.btn-new').addEventListener('click',function(){
                 console.log(isGamePlaying);
             }
             else{
-                document.querySelector('.dice').style.display = 'none';
-                
+                document.querySelector('.dice').style.display = 'none';              
                 document.getElementById('score-' + activePlayer).textContent =  scores[activePlayer];
                 activePlayer === 0 ? activePlayer = 1 : activePlayer = 0;
                 roundScore = 0;
